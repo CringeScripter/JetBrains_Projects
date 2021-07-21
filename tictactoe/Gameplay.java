@@ -1,5 +1,5 @@
 package tictactoe;
-
+import static tictactoe.GameCheckingOperations.*;
 public class Gameplay {
     public static void prepare(String parameters) {
 
@@ -16,6 +16,9 @@ public class Gameplay {
             case "medium":
                 user1 = new MediumBot('X');
                 break;
+            case "hard":
+                user1 = new HardBot('X');
+                break;
             case "user":
                 user1 = new Player('X');
                 break;
@@ -28,6 +31,9 @@ public class Gameplay {
                 break;
             case "medium":
                 user2 = new MediumBot('O');
+                break;
+            case "hard":
+                user2 = new HardBot('O');
                 break;
             case "user":
                 user2 = new Player('O');
@@ -43,17 +49,19 @@ public class Gameplay {
     }
 
     private static void process(User user1, User user2, Game game) {
-        GameCheckingOperations checker = new GameCheckingOperations();
+
         if (user2.symbol == 'X') {
             user2.makeMove(game);
         }
         do {
             user1.makeMove(game);
-            checker.checkField(game);
-            if (game.haveAWinner || game.underline_count == 0) break;
+            checkField(game);
+            checkEnding(game);
+            if (game.haveAWinner || isDraw(game)) break;
             user2.makeMove(game);
-            checker.checkField(game);
-        } while (!game.haveAWinner && game.underline_count != 0);
+            checkField(game);
+            checkEnding(game);
+        } while (!game.haveAWinner && !isDraw(game));
         if (!game.haveAWinner) {
             System.out.println("Draw");
         }

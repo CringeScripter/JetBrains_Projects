@@ -2,10 +2,9 @@ package tictactoe;
 
 public class Game {
 
-    public char[][] field;
+    public final char[][] field;
     char winner;
     boolean haveAWinner = false;
-    int underline_count = 9;
 
     public Game() {
         field = new char[3][3];

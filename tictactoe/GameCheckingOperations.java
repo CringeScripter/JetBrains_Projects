@@ -5,15 +5,14 @@ public class GameCheckingOperations {
         return game.field[i][j] == '_';
     }
 
-    public void checkField(Game game) {
+    public static void checkField(Game game) {
         checkHorizontal(game);
         checkVertical(game);
         checkDiagonal(game);
-        checkEnding(game);
     }
 
 
-    private void checkHorizontal(Game game) {
+    private static void checkHorizontal(Game game) {
         int control = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 2; j++) {
@@ -30,7 +29,7 @@ public class GameCheckingOperations {
         }
     }
 
-    private void checkVertical(Game game) {
+    private static void checkVertical(Game game) {
         int control = 1;
         for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 2; i++) {
@@ -47,7 +46,7 @@ public class GameCheckingOperations {
         }
     }
 
-    private void checkDiagonal(Game game) {
+    private static void checkDiagonal(Game game) {
         if (game.field[0][0] != '_' && game.field[0][0] == game.field[1][1] && game.field[1][1] == game.field[2][2]) {
             game.winner = game.field[0][0];
             game.haveAWinner = true;
@@ -60,12 +59,23 @@ public class GameCheckingOperations {
         }
     }
 
-    private void checkEnding(Game game) {
+    public static boolean isDraw(Game game) {
+        if (game.haveAWinner) {
+            return false;
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (game.field[i][j] == '_') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void checkEnding(Game game) {
         if (game.haveAWinner) {
             System.out.println(game.winner + " wins");
         }
     }
 }
-
-
-
